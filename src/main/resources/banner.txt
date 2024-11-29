@@ -1,0 +1,20 @@
+
+        GGGGGGGGGGGGG                             tttt          MMMMMMMM               MMMMMMMM                 bbbbbbb             iiii llllll
+     GGG::::::::::::G                          ttt:::t          M:::::::M             M:::::::M                 b:::::b            i::::il::::l
+   GG:::::::::::::::G                          t:::::t          M::::::::M           M::::::::M                 b:::::b             iiii l::::l
+  G:::::GGGGGGGG::::G                          t:::::t          M:::::::::M         M:::::::::M                 b:::::b                  l::::l
+ G:::::G       GGGGGG    eeeeeeeeeeee    ttttttt:::::ttttttt    M::::::::::M       M::::::::::M   ooooooooooo   b:::::bbbbbbbbb    iiiiiil::::l
+G:::::G                ee::::::::::::ee  t:::::::::::::::::t    M:::::::::::M     M:::::::::::M oo:::::::::::oo b::::::::::::::bb  i::::il::::l
+G:::::G               e::::::eeeee:::::eet:::::::::::::::::t    M:::::::M::::M   M::::M:::::::Mo:::::::::::::::ob::::::::::::::::b i::::il::::l
+G:::::G    GGGGGGGGGGe::::::e     e:::::etttttt:::::::tttttt    M::::::M M::::M M::::M M::::::Mo:::::ooooo:::::ob:::::bbbbb:::::::bi::::il::::l
+G:::::G    G::::::::Ge:::::::eeeee::::::e      t:::::t          M::::::M  M::::M::::M  M::::::Mo::::o     o::::ob:::::b    b::::::bi::::il::::l
+G:::::G    GGGGG::::Ge:::::::::::::::::e       t:::::t          M::::::M   M:::::::M   M::::::Mo::::o     o::::ob:::::b     b:::::bi::::il::::l
+G:::::G        G::::Ge::::::eeeeeeeeeee        t:::::t          M::::::M    M:::::M    M::::::Mo::::o     o::::ob:::::b     b:::::bi::::il::::l
+ G:::::G       G::::Ge:::::::e                 t:::::t    ttttttM::::::M     MMMMM     M::::::Mo::::o     o::::ob:::::b     b:::::bi::::il::::l
+  G:::::GGGGGGGG::::Ge::::::::e                t::::::tttt:::::tM::::::M               M::::::Mo:::::ooooo:::::ob:::::bbbbbb::::::bi::::il::::l
+   GG:::::::::::::::G e::::::::eeeeeeee        tt::::::::::::::tM::::::M               M::::::Mo:::::::::::::::ob::::::::::::::::b i::::il::::l
+     GGG::::::GGG:::G  ee:::::::::::::e          tt:::::::::::ttM::::::M               M::::::M oo:::::::::::oo b:::::::::::::::b  i::::il::::l
+        GGGGGG   GGGG    eeeeeeeeeeeeee            ttttttttttt  MMMMMMMM               MMMMMMMM   ooooooooooo   bbbbbbbbbbbbbbbb   iiiiiillllll
+
+${application.title} ${application.version}
+Powered by Spring Boot ${spring-boot.version}

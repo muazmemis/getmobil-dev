@@ -1,0 +1,92 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_USER: getmobil
+      POSTGRES_PASSWORD: getmobil
+      POSTGRES_DB: getmobil
+    ports:
+      - "5432:5432"
+    networks:
+      - getmobil-network
+
+  zookeeper:
+    image: "docker.io/bitnami/zookeeper:3"
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    volumes:
+      - "zookeeper_data:/bitnami"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - getmobil-network
+  kafka:
+      image: "docker.io/bitnami/kafka:2-debian-10"
+      container_name: kafka
+      ports:
+        - "9092:9092"
+      expose:
+        - "9093"
+      volumes:
+        - "kafka_data:/bitnami"
+      environment:
+        - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+        - ALLOW_PLAINTEXT_LISTENER=yes
+        - KAFKA_ADVERTISED_LISTENERS=INSIDE://kafka:9093,OUTSIDE://localhost:9092
+        - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+        - KAFKA_LISTENERS=INSIDE://0.0.0.0:9093,OUTSIDE://0.0.0.0:9092
+        - KAFKA_INTER_BROKER_LISTENER_NAME=INSIDE
+        - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      depends_on:
+        - zookeeper
+      networks:
+        - getmobil-network
+  kafka-ui:
+      image: provectuslabs/kafka-ui
+      container_name: kafka-ui
+      ports:
+        - "9090:8080"
+      restart: always
+      environment:
+        - KAFKA_CLUSTERS_0_NAME=local
+        - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9093
+        - KAFKA_CLUSTERS_0_ZOOKEEPER=localhost:2181
+      networks:
+        - getmobil-network
+  getmobil:
+    image: muazmemis/getmobil
+    container_name: getmobil
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/getmobil
+      - SPRING_DATASOURCE_USERNAME=getmobil
+      - SPRING_DATASOURCE_PASSWORD=getmobil
+      - SPRING_KAFKA_BOOTSTRAP-SERVERS=kafka:9093
+      - SPRING_KAFKA_PRODUCER_KEY-SERIALIZER=org.apache.kafka.common.serialization.StringSerializer
+      - SPRING_KAFKA_PRODUCER_VALUE-SERIALIZER=org.springframework.kafka.support.serializer.JsonSerializer
+      - SPRING_KAFKA_CONSUMER_KEY-DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+      - SPRING_KAFKA_CONSUMER_VALUE-DESERIALIZER=org.springframework.kafka.support.serializer.JsonDeserializer
+      - SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_TRUSTED_PACKAGES=*
+    networks:
+      - getmobil-network
+    depends_on:
+      - postgres
+      - kafka
+    volumes:
+      - ./log/:/var/log/getmobil
+
+volumes:
+  zookeeper_data:
+    driver: local
+  kafka_data:
+    driver: local
+
+networks:
+  getmobil-network:
+    driver: bridge
+
+# docker compose -p getmobil up -d

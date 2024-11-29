@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Product 1",
+    "price": 100,
+    "taxRate": 0.18,
+    "discountRate": 0.10,
+    "stock": 10000000
+  },
+  {
+    "name": "Product 2",
+    "price": 200,
+    "taxRate": 0.18,
+    "discountRate": 0.10,
+    "stock": 10000000
+  },
+  {
+    "name": "Product 3",
+    "price": 300,
+    "taxRate": 0.18,
+    "discountRate": 0.10,
+    "stock": 10000000
+  },
+  {
+    "name": "Product 4",
+    "price": 400,
+    "taxRate": 0.18,
+    "discountRate": 0.10,
+    "stock": 10000000
+  },
+  {
+    "name": "Product 5",
+    "price": 500,
+    "taxRate": 0.18,
+    "discountRate": 0.10,
+    "stock": 10000000
+  }
+]
