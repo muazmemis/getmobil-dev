@@ -13,10 +13,10 @@
 
 - [Postman Collection](./GetMobil.postman_collection.json)
 
-![Postman](./images/PostmanRequestTest1.png)'
+![Postman](./images/PostmanRequestTest1.png)
 
-![Postman](./images/PostmanRequestTest2.png)'
+![Postman](./images/PostmanRequestTest2.png)
 
 ## Unit Test
 
-![Unit Test](./images/UnitTest.png)'
+![Unit Test](./images/UnitTest.png)
