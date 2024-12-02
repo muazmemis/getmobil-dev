@@ -46,10 +46,6 @@ public class ProductService {
 
     public List<ProductResponseDto> findAll() {
         List<Product> products = productRepository.findAll();
-        // TODO: This is a bug. It should be checked if the list is null or empty.
-        if (products == null)
-            return null;
-
         logInfo("All products fetched. Product count: {}", products.size());
 
         return productMapper.map(products);

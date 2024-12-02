@@ -5,6 +5,7 @@ import dev.muazmemis.getmobil_dev.entity.Invoice;
 import dev.muazmemis.getmobil_dev.exception.ItemNotFoundException;
 import dev.muazmemis.getmobil_dev.mapper.InvoiceMapper;
 import dev.muazmemis.getmobil_dev.repository.InvoiceRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class InvoiceService {
     private final InvoiceRepository invoiceRepository;
     private final InvoiceMapper invoiceMapper;
 
+    @Transactional
     public Invoice save(Invoice invoice) {
         Invoice saveInvoice = invoiceRepository.save(invoice);
         logInfo("Invoice saved: {}", saveInvoice);
@@ -28,10 +30,6 @@ public class InvoiceService {
 
     public List<InvoiceResponseDto> findAll() {
         List<Invoice> invoices = invoiceRepository.findAll();
-        // TODO: This is a bug. It should be checked if the list is null or empty.
-        if (invoices == null)
-            return null;
-
         logInfo("All invoices fetched. Invoice count: {}", invoices.size());
 
         return invoiceMapper.map(invoices);

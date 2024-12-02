@@ -11,8 +11,6 @@ import java.util.List;
 @Component
 public class OrderItemMapper {
 
-//    public static final OrderItemMapper INSTANCE = new OrderItemMapper(); // TODO:
-
     public OrderItem map(OrderItemDto orderItemDto) {
         return OrderItem.builder()
                 .product(Product.builder().id(orderItemDto.productId()).build())

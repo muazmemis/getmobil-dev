@@ -1,5 +1,6 @@
 package dev.muazmemis.getmobil_dev.service;
 
+import dev.muazmemis.getmobil_dev.dto.OrderRequestDto;
 import dev.muazmemis.getmobil_dev.dto.OrderResponseDto;
 import dev.muazmemis.getmobil_dev.entity.Product;
 import dev.muazmemis.getmobil_dev.entity.Invoice;
@@ -32,7 +33,7 @@ public class OrderService {
     private final OrderMapper orderMapper;
 
     @Transactional
-    public Order save(Order order) {
+    public void save(Order order) {
         Order savedOrder = orderRepository.save(order);
         logInfo("Order saved. Order id: {}", savedOrder.getId());
 
@@ -43,12 +44,12 @@ public class OrderService {
                         .order(savedOrder).build());
             }
         });
-
-        return savedOrder;
     }
 
     @Transactional(rollbackOn = InsufficientStockException.class)
-    public void saveWithKafka(Order order) {
+    public void processSaveOrder(OrderRequestDto orderRequestDto) {
+        Order order = orderMapper.map(orderRequestDto);
+
         order.getItems().forEach(item -> {
             item.setProduct(productService.findById(item.getProduct().getId()));
             Integer newStock = reduceStock(item.getProduct(), item.getQuantity());
@@ -63,10 +64,6 @@ public class OrderService {
 
     public List<OrderResponseDto> findAll() {
         List<Order> orders = orderRepository.findAll();
-        // TODO: This is a bug. It should be checked if the list is null or empty.
-        if (orders == null)
-            return null;
-
         logInfo("All orders fetched. Order count: {}", orders.size());
 
         return orderMapper.map(orders);

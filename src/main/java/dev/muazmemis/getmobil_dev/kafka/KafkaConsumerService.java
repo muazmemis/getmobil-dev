@@ -34,9 +34,9 @@ public class KafkaConsumerService {
     }
 
     @KafkaListener(topics = ORDER_TOPIC, groupId = ORDER_GROUP_ID)
-    public Order consumeOrder(Order order) {
+    public void consumeOrder(Order order) {
         logInfo("Order consumed: {}", order);
-        return orderService.save(order);
+        orderService.save(order);
     }
 
     @KafkaListener(topics = INVOICE_TOPIC, groupId = INVOICE_GROUP_ID)

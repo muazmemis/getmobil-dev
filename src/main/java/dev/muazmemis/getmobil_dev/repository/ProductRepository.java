@@ -12,5 +12,3 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     void updateStock(Long id, Integer newStock);
 
 }
-
-
