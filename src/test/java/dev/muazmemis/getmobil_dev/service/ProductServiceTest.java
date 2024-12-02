@@ -46,15 +46,16 @@ public class ProductServiceTest {
 
     @Test
     void shouldFindAllWhenReturnsProducts() {
-        when(productRepository.findAll()).thenReturn(List.of(product, product));
-        when(productMapper.map(anyList())).thenReturn(List.of(productResponseDto, productResponseDto));
+        List<Product> products = List.of(product, product);
+        when(productRepository.findAll()).thenReturn(products);
+        when(productMapper.map(products)).thenReturn(List.of(productResponseDto, productResponseDto));
 
         assertEquals(2, productService.findAll().size());
     }
 
     @Test
     void shouldFindAllWhenProductListIsNull() {
-        when(productRepository.findAll()).thenReturn(null);
+        when(productMapper.map(anyList())).thenReturn(null);
 
         assertNull(productService.findAll());
     }

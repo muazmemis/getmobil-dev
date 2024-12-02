@@ -1,8 +1,6 @@
 package dev.muazmemis.getmobil_dev.service;
 
-import dev.muazmemis.getmobil_dev.dto.InvoiceResponseDto;
 import dev.muazmemis.getmobil_dev.dto.OrderResponseDto;
-import dev.muazmemis.getmobil_dev.entity.Invoice;
 import dev.muazmemis.getmobil_dev.entity.Order;
 import dev.muazmemis.getmobil_dev.enums.OrderStatus;
 import dev.muazmemis.getmobil_dev.exception.ItemNotFoundException;
@@ -62,10 +60,9 @@ class OrderServiceTest {
 //        assertEquals(1, 1);
 //    }
 
-
-
     @Test
     void shouldFindAll() {
+        when(orderRepository.findAll()).thenReturn(List.of());
         when(orderMapper.map(anyList())).thenReturn(List.of());
 
         assertEquals(0, orderService.findAll().size());
@@ -73,6 +70,7 @@ class OrderServiceTest {
 
     @Test
     void shouldFindAllWhenReturnsOrders() {
+        when(orderRepository.findAll()).thenReturn(List.of(order));
         when(orderMapper.map(anyList())).thenReturn(List.of(orderResponseDto));
 
         assertEquals(1, orderService.findAll().size());
@@ -80,7 +78,7 @@ class OrderServiceTest {
 
     @Test
     void shouldFindAllWhenOrderListIsNull() {
-        when(orderRepository.findAll()).thenReturn(null);
+        when(orderMapper.map(anyList())).thenReturn(null);
 
         assertNull(orderService.findAll());
     }

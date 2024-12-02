@@ -2,7 +2,6 @@ package dev.muazmemis.getmobil_dev.service;
 
 import dev.muazmemis.getmobil_dev.dto.InvoiceResponseDto;
 import dev.muazmemis.getmobil_dev.entity.Invoice;
-import dev.muazmemis.getmobil_dev.entity.Invoice;
 import dev.muazmemis.getmobil_dev.exception.ItemNotFoundException;
 import dev.muazmemis.getmobil_dev.mapper.InvoiceMapper;
 import dev.muazmemis.getmobil_dev.repository.InvoiceRepository;
@@ -50,6 +49,7 @@ class InvoiceServiceTest {
 
     @Test
     void shouldFindAll() {
+        when(invoiceRepository.findAll()).thenReturn(List.of());
         when(invoiceMapper.map(anyList())).thenReturn(List.of());
 
         assertEquals(0, invoiceService.findAll().size());
@@ -57,6 +57,7 @@ class InvoiceServiceTest {
 
     @Test
     void shouldFindAllWhenReturnsInvoices() {
+        when(invoiceRepository.findAll()).thenReturn(List.of(invoice));
         when(invoiceMapper.map(anyList())).thenReturn(List.of(invoiceResponseDto));
 
         assertEquals(1, invoiceService.findAll().size());
@@ -64,7 +65,7 @@ class InvoiceServiceTest {
 
     @Test
     void shouldFindAllWhenInvoiceListIsNull() {
-        when(invoiceRepository.findAll()).thenReturn(null);
+        when(invoiceMapper.map(anyList())).thenReturn(null);
 
         assertNull(invoiceService.findAll());
     }
@@ -74,7 +75,6 @@ class InvoiceServiceTest {
         when(invoiceResponseDto.id()).thenReturn(1L);
         when(invoiceRepository.findById(anyLong())).thenReturn(Optional.of(invoice));
         when(invoiceMapper.map(invoice)).thenReturn(invoiceResponseDto);
-
 
         InvoiceResponseDto result = invoiceService.findById(1L);
         assertEquals(1L, result.id());
