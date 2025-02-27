@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres
-    container_name: postgres
+    container_name: postgres2
     environment:
       POSTGRES_USER: getmobil
       POSTGRES_PASSWORD: getmobil
@@ -14,7 +14,7 @@ services:
 
   zookeeper:
     image: "docker.io/bitnami/zookeeper:3"
-    container_name: zookeeper
+    container_name: zookeeper2
     ports:
       - "2181:2181"
     volumes:
@@ -24,6 +24,7 @@ services:
     restart: always
     networks:
       - getmobil-network
+
   kafka:
       image: "docker.io/bitnami/kafka:2-debian-10"
       container_name: kafka
@@ -46,11 +47,12 @@ services:
         - zookeeper
       networks:
         - getmobil-network
+
   kafka-ui:
       image: provectuslabs/kafka-ui
       container_name: kafka-ui
       ports:
-        - "9090:8080"
+        - "9091:8080"
       restart: always
       environment:
         - KAFKA_CLUSTERS_0_NAME=local
@@ -58,30 +60,31 @@ services:
         - KAFKA_CLUSTERS_0_ZOOKEEPER=localhost:2181
       networks:
         - getmobil-network
-  getmobil:
-    image: muazmemis/getmobil
-    container_name: getmobil
-    ports:
-      - "8080:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=dev
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/getmobil
-      - SPRING_DATASOURCE_USERNAME=getmobil
-      - SPRING_DATASOURCE_PASSWORD=getmobil
-      - SPRING_KAFKA_BOOTSTRAP-SERVERS=kafka:9093
-      - SPRING_KAFKA_PRODUCER_KEY-SERIALIZER=org.apache.kafka.common.serialization.StringSerializer
-      - SPRING_KAFKA_PRODUCER_VALUE-SERIALIZER=org.springframework.kafka.support.serializer.JsonSerializer
-      - SPRING_KAFKA_CONSUMER_KEY-DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
-      - SPRING_KAFKA_CONSUMER_VALUE-DESERIALIZER=org.springframework.kafka.support.serializer.JsonDeserializer
-      - SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_TRUSTED_PACKAGES=*
-    restart: always
-    networks:
-      - getmobil-network
-    depends_on:
-      - postgres
-      - kafka
-    volumes:
-      - ./log/:/var/log/getmobil
+
+#  getmobil:
+#    image: muazmemis/getmobil
+#    container_name: getmobil
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=dev
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/getmobil
+#      - SPRING_DATASOURCE_USERNAME=getmobil
+#      - SPRING_DATASOURCE_PASSWORD=getmobil
+#      - SPRING_KAFKA_BOOTSTRAP-SERVERS=kafka:9093
+#      - SPRING_KAFKA_PRODUCER_KEY-SERIALIZER=org.apache.kafka.common.serialization.StringSerializer
+#      - SPRING_KAFKA_PRODUCER_VALUE-SERIALIZER=org.springframework.kafka.support.serializer.JsonSerializer
+#      - SPRING_KAFKA_CONSUMER_KEY-DESERIALIZER=org.apache.kafka.common.serialization.StringDeserializer
+#      - SPRING_KAFKA_CONSUMER_VALUE-DESERIALIZER=org.springframework.kafka.support.serializer.JsonDeserializer
+#      - SPRING_KAFKA_CONSUMER_PROPERTIES_SPRING_JSON_TRUSTED_PACKAGES=*
+#    restart: always
+#    networks:
+#      - getmobil-network
+#    depends_on:
+#      - postgres
+#      - kafka
+#    volumes:
+#      - ./log/:/var/log/getmobil
 
 volumes:
   zookeeper_data:
